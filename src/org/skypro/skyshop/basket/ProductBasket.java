@@ -1,6 +1,6 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "Введение в ООП. Инкапсуляция"
+// Домашнее задание по теме "ООП. Наследование. Абстрактные классы"
 
 package org.skypro.skyshop.basket;
 
@@ -90,6 +90,23 @@ public class ProductBasket {
     }
 
     /**
+     * Получение количества специальных товаров в корзине.
+     *
+     * @return количество специальных товаров в корзине
+     */
+    public int getSpecialProductCount() {
+        int count = 0;
+        for (Product product : products) {
+            if (product != null) {
+                if (product.isSpecial()) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
      * Получение количества товаров в корзине.
      *
      * @return количество товаров в корзине
@@ -115,7 +132,7 @@ public class ProductBasket {
 
         for (Product product : products) {
             if (product != null) {
-                System.out.println(product.getTitle() + ": " + product.getPrice());
+                System.out.println(product);
             }
         }
     }

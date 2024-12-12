@@ -1,6 +1,6 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "ООП. Полиморфизм. Интерфейсы"
+// Домашнее задание по теме "Исключения в Java"
 
 package org.skypro.skyshop;
 
@@ -150,6 +150,43 @@ public class App {
             if (searchResult != null) {
                 System.out.println("Имя searchable: " + searchResult.getSearchableName());
             }
+        }
+
+        System.out.println();
+
+        System.out.println("Создание SimpleProduct с неверным названием...");
+        try {
+            Product product8 = new SimpleProduct("  ", 1);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Ошибка: " + ex.getMessage());
+        }
+
+        System.out.println("Создание SimpleProduct с неверной ценой...");
+        try {
+            Product product8 = new SimpleProduct("Продукт №8", 0);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Ошибка: " + ex.getMessage());
+        }
+
+        System.out.println("Создание DiscountedProduct с неверным названием...");
+        try {
+            Product product8 = new DiscountedProduct("  ", 1, 0);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Ошибка: " + ex.getMessage());
+        }
+
+        System.out.println("Создание DiscountedProduct с неверной ценой...");
+        try {
+            Product product8 = new DiscountedProduct("Продукт №8", 0, 0);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Ошибка: " + ex.getMessage());
+        }
+
+        System.out.println("Создание DiscountedProduct с неверной скидкой...");
+        try {
+            Product product8 = new DiscountedProduct("Продукт №8", 1, -1);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Ошибка: " + ex.getMessage());
         }
     }
 }

@@ -1,6 +1,6 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "ООП. Наследование. Абстрактные классы"
+// Домашнее задание по теме "Исключения в Java"
 
 package org.skypro.skyshop.product;
 
@@ -23,6 +23,9 @@ public abstract class Product implements Searchable {
      * @param title название продукта.
      */
     public Product(@NotNull String title) {
+        if (title.isBlank()) {
+            throw new IllegalArgumentException("Наименование продукта не может быть пустым");
+        }
         this.title = title;
     }
 

@@ -1,6 +1,6 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "ООП. Наследование. Абстрактные классы"
+// Домашнее задание по теме "Исключения в Java"
 
 package org.skypro.skyshop.product;
 
@@ -23,6 +23,10 @@ public final class SimpleProduct extends Product {
      */
     public SimpleProduct(@NotNull String title, int price) {
         super(title);
+
+        if (price <= 0) {
+            throw new IllegalArgumentException("Цена не может быть отрицательной или быть равной нулю");
+        }
         this.price = price;
     }
 

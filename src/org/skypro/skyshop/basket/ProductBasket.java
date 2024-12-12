@@ -5,6 +5,7 @@
 package org.skypro.skyshop.basket;
 
 import org.jetbrains.annotations.NotNull;
+import org.skypro.skyshop.arrays.ArrayTools;
 import org.skypro.skyshop.product.Product;
 
 import java.util.Arrays;
@@ -20,11 +21,6 @@ public class ProductBasket {
      * Максимальное количество товаров в корзине.
      */
     public static final int MAX_PRODUCTS = 5;
-
-    /**
-     * Универсальный признак "не найдено".
-     */
-    public static final int NOT_FOUND = -1;
 
     /**
      * Реализация хранилища товаров.
@@ -47,27 +43,13 @@ public class ProductBasket {
     }
 
     /**
-     * Получение первой от нуля свободной или занятой ячейки в хранилище.
-     *
-     * @return индекс свободной ячейки или {@link #NOT_FOUND}
-     */
-    private int getFirstFreeIndex() {
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] == null) {
-                return i;
-            }
-        }
-        return NOT_FOUND;
-    }
-
-    /**
      * Добавление товара в корзину.
      *
      * @param product добавляемый товар
      */
     public void add(@NotNull Product product) {
-        int freeIndex = getFirstFreeIndex();
-        if (freeIndex == NOT_FOUND) {
+        int freeIndex = ArrayTools.getFirsIndex(products, true);
+        if (freeIndex == ArrayTools.NOT_FOUND) {
             System.out.println("Невозможно добавить продукт");
             return;
         }

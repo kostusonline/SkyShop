@@ -136,5 +136,20 @@ public class App {
         query = "мясо";
         searchResults = searchEngine.search(query);
         System.out.println("Результаты поиска " + query + ": " + Arrays.toString(searchResults));
+
+        System.out.println();
+
+        query = "олок";
+        searchResults = searchEngine.search(query);
+        System.out.println("Результаты поиска " + query + ": " + Arrays.toString(searchResults));
+
+        System.out.println();
+
+        System.out.println("Представление результатов поиска в виде имён:");
+        for (var searchResult : searchResults) {
+            if (searchResult != null) {
+                System.out.println("Имя searchable: " + searchResult.getSearchableName());
+            }
+        }
     }
 }

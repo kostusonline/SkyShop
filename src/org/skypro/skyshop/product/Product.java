@@ -57,6 +57,11 @@ public abstract class Product implements Searchable {
         return false;
     }
 
+    @NotNull
+    public String getSearchableName() {
+        return this.getClass().getSimpleName() + "-" + SEARCHABLE_CONTENT_KIND + "-" + this.hashCode();
+    }
+
     @Override
     public @NotNull String getSearchableTerm() {
         return toString();

@@ -59,6 +59,11 @@ public final class Article implements Searchable {
         return title + "\n" + content;
     }
 
+    @NotNull
+    public String getSearchableName() {
+        return this.getClass().getSimpleName() + "-" + SEARCHABLE_CONTENT_KIND + "-" + this.hashCode();
+    }
+
     @Override
     public @NotNull String getSearchableTerm() {
         return toString();

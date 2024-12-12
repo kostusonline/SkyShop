@@ -10,6 +10,7 @@ public interface Searchable {
     /**
      * @return Имя объекта Searchable
      */
+    @SuppressWarnings("unused")
     @NotNull
     default String getSearchableName() {
         return this.getClass().getSimpleName() + "-" + this.hashCode();
@@ -24,6 +25,7 @@ public interface Searchable {
     /**
      * @return Вид содержимого, по которому производится поиск
      */
+    @SuppressWarnings("unused")
     @NotNull
     String getSearchableContentKind();
 }

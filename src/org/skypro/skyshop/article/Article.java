@@ -15,6 +15,8 @@ import org.skypro.skyshop.search.Searchable;
  * @author Константин Терских, kostus.online.1974@yandex.ru, 2024
  * @version 1.1
  */
+// TODO: Как подавить только "class can be record"?
+@SuppressWarnings("all")
 public final class Article implements Searchable {
     @NotNull
     private final String title;

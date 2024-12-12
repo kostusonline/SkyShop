@@ -9,7 +9,6 @@ import org.skypro.skyshop.arrays.ArrayTools;
 import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Движок поиска.<br>
@@ -33,33 +32,10 @@ public final class SearchEngine {
     }
 
     /**
-     * Конструктор.
-     *
-     * @param searchableItems массив интерфейсов поиска.
-     */
-    public SearchEngine(Searchable[] searchableItems) {
-        this.searchableItems = searchableItems;
-    }
-
-    /**
      * Очистка массива.
      */
     public void clear() {
         Arrays.fill(searchableItems, null);
-    }
-
-    /**
-     * Удаление элемента из массива.
-     *
-     * @param searchable элемент для удаления.
-     */
-    public void remove(@NotNull Searchable searchable) {
-        for (int i = 0; i < searchableItems.length; i++) {
-            if (Objects.equals(searchableItems[i], searchable)) {
-                searchableItems[i] = null;
-                break;
-            }
-        }
     }
 
     /**

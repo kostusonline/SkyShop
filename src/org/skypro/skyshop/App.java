@@ -10,6 +10,8 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.Searchable;
+import org.skypro.skyshop.search.engine.BestResultNotFound;
 import org.skypro.skyshop.search.engine.SearchEngine;
 
 import java.util.Arrays;
@@ -107,6 +109,10 @@ public class App {
                 "У меня когда-то давно был автомобиль Toyota Ipsum в 10-м кузове. " +
                         "Лучшая машина на планете Земля.");
 
+        Article article4 = new Article("Lorem Ipsum про автомобиль Toyota Ipsum в 10-м кузове.",
+                "У меня когда-то давно был автомобиль Toyota Ipsum в 10-м кузове. " +
+                        "Лучшая машина на планете Земля - это минивэн Toyota Ipsum");
+
         System.out.println("Заполнение движка поиска...");
         SearchEngine searchEngine = new SearchEngine(20);
         searchEngine.add(product1);
@@ -119,6 +125,7 @@ public class App {
         searchEngine.add(article1);
         searchEngine.add(article2);
         searchEngine.add(article3);
+        searchEngine.add(article4);
         System.out.println("Заполнен");
 
         String query = "Бластер";
@@ -156,6 +163,7 @@ public class App {
 
         System.out.println("Создание SimpleProduct с неверным названием...");
         try {
+            @SuppressWarnings("unused")
             Product product8 = new SimpleProduct("  ", 1);
         } catch (IllegalArgumentException ex) {
             System.out.println("Ошибка: " + ex.getMessage());
@@ -163,6 +171,7 @@ public class App {
 
         System.out.println("Создание SimpleProduct с неверной ценой...");
         try {
+            @SuppressWarnings("unused")
             Product product8 = new SimpleProduct("Продукт №8", 0);
         } catch (IllegalArgumentException ex) {
             System.out.println("Ошибка: " + ex.getMessage());
@@ -170,6 +179,7 @@ public class App {
 
         System.out.println("Создание DiscountedProduct с неверным названием...");
         try {
+            @SuppressWarnings("unused")
             Product product8 = new DiscountedProduct("  ", 1, 0);
         } catch (IllegalArgumentException ex) {
             System.out.println("Ошибка: " + ex.getMessage());
@@ -177,6 +187,7 @@ public class App {
 
         System.out.println("Создание DiscountedProduct с неверной ценой...");
         try {
+            @SuppressWarnings("unused")
             Product product8 = new DiscountedProduct("Продукт №8", 0, 0);
         } catch (IllegalArgumentException ex) {
             System.out.println("Ошибка: " + ex.getMessage());
@@ -184,8 +195,30 @@ public class App {
 
         System.out.println("Создание DiscountedProduct с неверной скидкой...");
         try {
+            @SuppressWarnings("unused")
             Product product8 = new DiscountedProduct("Продукт №8", 1, -1);
         } catch (IllegalArgumentException ex) {
+            System.out.println("Ошибка: " + ex.getMessage());
+        }
+
+        System.out.println();
+        Searchable bestResult;
+
+        query = "Ipsum";
+        System.out.println("Поиск лучшего результата для " + query + "...");
+        try {
+            bestResult = searchEngine.searchMostFrequent(query);
+            System.out.println("Результаты поиска " + query + ": " + bestResult);
+        } catch (BestResultNotFound ex) {
+            System.out.println("Ошибка: " + ex.getMessage());
+        }
+
+        query = "Odyssey";
+        System.out.println("Поиск лучшего результата для " + query + "...");
+        try {
+            bestResult = searchEngine.searchMostFrequent(query);
+            System.out.println("Результаты поиска " + query + ": " + bestResult);
+        } catch (BestResultNotFound ex) {
             System.out.println("Ошибка: " + ex.getMessage());
         }
     }

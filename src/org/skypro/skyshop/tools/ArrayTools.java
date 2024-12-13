@@ -2,7 +2,7 @@
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
 // Домашнее задание по теме "ООП. Полиморфизм. Интерфейсы"
 
-package org.skypro.skyshop.arrays;
+package org.skypro.skyshop.tools;
 
 /**
  * Инструменты для работы с массивами.

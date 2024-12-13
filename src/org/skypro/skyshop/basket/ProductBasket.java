@@ -5,7 +5,7 @@
 package org.skypro.skyshop.basket;
 
 import org.jetbrains.annotations.NotNull;
-import org.skypro.skyshop.arrays.ArrayTools;
+import org.skypro.skyshop.tools.ArrayTools;
 import org.skypro.skyshop.product.Product;
 
 import java.util.Arrays;

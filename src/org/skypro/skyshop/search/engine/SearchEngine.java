@@ -5,8 +5,9 @@
 package org.skypro.skyshop.search.engine;
 
 import org.jetbrains.annotations.NotNull;
-import org.skypro.skyshop.arrays.ArrayTools;
+import org.skypro.skyshop.tools.ArrayTools;
 import org.skypro.skyshop.search.Searchable;
+import org.skypro.skyshop.tools.StringTools;
 
 import java.util.Arrays;
 
@@ -63,7 +64,7 @@ public final class SearchEngine {
      * @param query запрос.
      */
     @NotNull
-    public Searchable[] search(String query) {
+    public Searchable[] search(@NotNull String query) {
         Searchable[] results = new Searchable[MAX_RESULTS];
         Arrays.fill(results, null);
 
@@ -80,5 +81,38 @@ public final class SearchEngine {
             }
         }
         return results;
+    }
+
+    /**
+     * Поиск наиболее частого результата.
+     *
+     * @param query запрос.
+     * @throws BestResultNotFound если не найдено совпадений.
+     */
+    @NotNull
+    public Searchable searchMostFrequent(String query) throws BestResultNotFound {
+        int firstIndex = ArrayTools.getFirsIndex(searchableItems, false);
+        if (firstIndex == ArrayTools.NOT_FOUND) {
+            throw new BestResultNotFound("Массив элементов для поиска пуст");
+        }
+
+        Searchable mostFrequent = searchableItems[firstIndex];
+        int maxCount = StringTools.countMatches(mostFrequent.getSearchableTerm(), query);
+
+        for (Searchable searchable : searchableItems) {
+            if (searchable != null) {
+                int count = StringTools.countMatches(searchable.getSearchableTerm(), query);
+                if (count > maxCount) {
+                    maxCount = count;
+                    mostFrequent = searchable;
+                }
+            }
+        }
+
+        if (maxCount <= 0) {
+            throw new BestResultNotFound("Не найдено совпадений");
+        }
+
+        return mostFrequent;
     }
 }

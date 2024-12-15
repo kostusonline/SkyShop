@@ -4,6 +4,11 @@
 
 package org.skypro.skyshop.tools;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Инструменты для работы с массивами.
  *
@@ -31,5 +36,16 @@ public final class ArrayTools {
             }
         }
         return NOT_FOUND;
+    }
+
+    public static <T> String toString(List<T> list) {
+        if (list == null) {
+            return "";
+        }
+        String[] semiResults = new String[list.size()];
+        for (int i = 0; i < semiResults.length; i++) {
+            semiResults[i] = list.get(i).toString();
+        }
+        return String.join(", ", semiResults);
     }
 }

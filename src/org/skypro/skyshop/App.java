@@ -1,6 +1,6 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "Исключения в Java"
+// Домашнее задание по теме "Java Collections Framework: List"
 
 package org.skypro.skyshop;
 
@@ -13,8 +13,7 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.search.engine.BestResultNotFound;
 import org.skypro.skyshop.search.engine.SearchEngine;
-
-import java.util.Arrays;
+import org.skypro.skyshop.tools.ArrayTools;
 
 public class App {
     public static void main(String[] args) {
@@ -38,12 +37,6 @@ public class App {
         basket.add(product4);
         basket.add(product5);
         System.out.println("Заполнена");
-        System.out.println();
-
-        // Добавление продукта в заполненную корзину, в которой нет свободного места.
-        System.out.println("Переполнение корзины...");
-        basket.add(product6);
-        System.out.println();
 
         // Печать содержимого корзины с несколькими товарами.
         basket.print();
@@ -114,7 +107,7 @@ public class App {
                         "Лучшая машина на планете Земля - это минивэн Toyota Ipsum");
 
         System.out.println("Заполнение движка поиска...");
-        SearchEngine searchEngine = new SearchEngine(20);
+        SearchEngine searchEngine = new SearchEngine();
         searchEngine.add(product1);
         searchEngine.add(product2);
         searchEngine.add(product3);
@@ -130,25 +123,25 @@ public class App {
 
         String query = "Бластер";
         var searchResults = searchEngine.search(query);
-        System.out.println("Результаты поиска " + query + ": " + Arrays.toString(searchResults));
+        System.out.println("Результаты поиска " + query + ": " + ArrayTools.toString(searchResults));
 
         query = "Молоко";
         searchResults = searchEngine.search(query);
-        System.out.println("Результаты поиска " + query + ": " + Arrays.toString(searchResults));
+        System.out.println("Результаты поиска " + query + ": " + ArrayTools.toString(searchResults));
 
         query = "молоко";
         searchResults = searchEngine.search(query);
-        System.out.println("Результаты поиска " + query + ": " + Arrays.toString(searchResults));
+        System.out.println("Результаты поиска " + query + ": " + ArrayTools.toString(searchResults));
 
         query = "мясо";
         searchResults = searchEngine.search(query);
-        System.out.println("Результаты поиска " + query + ": " + Arrays.toString(searchResults));
+        System.out.println("Результаты поиска " + query + ": " + ArrayTools.toString(searchResults));
 
         System.out.println();
 
         query = "олок";
         searchResults = searchEngine.search(query);
-        System.out.println("Результаты поиска " + query + ": " + Arrays.toString(searchResults));
+        System.out.println("Результаты поиска " + query + ": " + ArrayTools.toString(searchResults));
 
         System.out.println();
 
@@ -221,5 +214,52 @@ public class App {
         } catch (BestResultNotFound ex) {
             System.out.println("Ошибка: " + ex.getMessage());
         }
+
+        System.out.println();
+
+        // Снова добавляем продукты в корзину.
+        System.out.println("Заполнение корзины. Ещё раз...");
+        basket.add(product1);
+        basket.add(product2);
+        basket.add(product3);
+        basket.add(product4);
+        basket.add(product5);
+        basket.add(product6);
+        basket.add(product7);
+
+        // Удалить существующий продукт из корзины.
+        query = "Молоко";
+        System.out.println("Удаляем продукт " + query + " из корзины...");
+        var removedProducts = basket.remove(query);
+
+        // Вывести удаленные продукты на экран.
+        System.out.println("Удаленные продукты: ");
+        for (var product : removedProducts) {
+            System.out.println(product);
+        }
+
+        System.out.println();
+
+        // Вывести содержимое корзины на экран.
+        basket.print();
+
+        System.out.println();
+
+        // Удалить несуществующий продукт.
+        query = "Масло питяровое";
+        System.out.println("Удаляем несуществующий продукт " + query + " из корзины...");
+        removedProducts = basket.remove(query);
+
+        // Проверить, что список удаленных продуктов пустой и вывести сообщение “Список пуст”.
+        if (removedProducts.isEmpty()) {
+            System.out.println("Список пуст");
+        } else {
+            System.out.println("Список не пуст!");
+        }
+
+        System.out.println();
+
+        // Вывести содержимое корзины на экран.
+        basket.print();
     }
 }

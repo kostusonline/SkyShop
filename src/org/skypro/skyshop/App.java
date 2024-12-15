@@ -1,6 +1,6 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "Java Collections Framework: List"
+// Домашнее задание по теме "Java Collections Framework: Map"
 
 package org.skypro.skyshop;
 
@@ -141,16 +141,7 @@ public class App {
 
         query = "олок";
         searchResults = searchEngine.search(query);
-        System.out.println("Результаты поиска " + query + ": " + ArrayTools.toString(searchResults));
-
-        System.out.println();
-
-        System.out.println("Представление результатов поиска в виде имён:");
-        for (var searchResult : searchResults) {
-            if (searchResult != null) {
-                System.out.println("Имя searchable: " + searchResult.getSearchableName());
-            }
-        }
+        System.out.println("Результаты поиска " + query + ": " + '\n' + ArrayTools.toString(searchResults));
 
         System.out.println();
 

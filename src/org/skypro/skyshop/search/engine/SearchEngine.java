@@ -5,11 +5,9 @@
 package org.skypro.skyshop.search.engine;
 
 import org.jetbrains.annotations.NotNull;
-import org.skypro.skyshop.tools.ArrayTools;
 import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.tools.StringTools;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 

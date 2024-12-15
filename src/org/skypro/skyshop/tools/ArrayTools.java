@@ -4,9 +4,9 @@
 
 package org.skypro.skyshop.tools;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,6 +26,8 @@ public final class ArrayTools {
      *
      * @return индекс свободной ячейки или {@link #NOT_FOUND}
      */
+    @SuppressWarnings("unused")
+    @Contract(pure = true)
     public static <T> int getFirsIndex(T[] array, boolean free) {
         for (int i = 0; i < array.length; i++) {
             if (free && array[i] == null) {
@@ -38,7 +40,7 @@ public final class ArrayTools {
         return NOT_FOUND;
     }
 
-    public static <T> String toString(List<T> list) {
+    public static <T> @NotNull String toString(List<T> list) {
         if (list == null) {
             return "";
         }

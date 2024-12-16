@@ -1,6 +1,6 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "Java Collections Framework: Set"
+// Домашнее задание по теме "Java Collections Framework: Map"
 
 package org.skypro.skyshop;
 

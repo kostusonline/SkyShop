@@ -1,14 +1,16 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "ООП. Наследование. Абстрактные классы"
+// Домашнее задание по теме "Java Collections Framework: List"
 
 package org.skypro.skyshop.basket;
 
 import org.jetbrains.annotations.NotNull;
-import org.skypro.skyshop.tools.ArrayTools;
 import org.skypro.skyshop.product.Product;
 
-import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Корзина товаров.
@@ -18,28 +20,26 @@ import java.util.Arrays;
  */
 public class ProductBasket {
     /**
-     * Максимальное количество товаров в корзине.
-     */
-    public static final int MAX_PRODUCTS = 5;
-
-    /**
      * Реализация хранилища товаров.
      */
-    private final Product[] products;
+    private final List<Product> products;
 
     /**
      * Конструктор.
      */
     public ProductBasket() {
-        products = new Product[MAX_PRODUCTS];
+        products = new LinkedList<>();
         clear();
+        // LinkedList выбран потому, что сейчас не нужна функциональность
+        // массива в части доступа по индексу. Больше нужна функциональность
+        // по произвольному добавлению и удалению элементов.
     }
 
     /**
      * Очистка корзины.
      */
     public void clear() {
-        Arrays.fill(products, null);
+        products.clear();
     }
 
     /**
@@ -48,12 +48,28 @@ public class ProductBasket {
      * @param product добавляемый товар
      */
     public void add(@NotNull Product product) {
-        int freeIndex = ArrayTools.getFirsIndex(products, true);
-        if (freeIndex == ArrayTools.NOT_FOUND) {
-            System.out.println("Невозможно добавить продукт");
-            return;
+        products.add(product);
+    }
+
+    /**
+     * Удаление товара из корзины.
+     *
+     * @param title наименование удаляемого товара
+     */
+    @NotNull
+    public List<Product> remove(@NotNull String title) {
+        List<Product> removed = new LinkedList<>();
+
+        Iterator<Product> iterator = products.iterator();
+        while (iterator.hasNext()) {
+            var element = iterator.next();
+            if (element.getTitle().equals(title)) {
+                iterator.remove();
+                removed.add(element);
+            }
         }
-        products[freeIndex] = product;
+
+        return removed;
     }
 
     /**
@@ -89,18 +105,12 @@ public class ProductBasket {
     }
 
     /**
-     * Получение количества товаров в корзине.
+     * Получение общего количества товаров в корзине.
      *
-     * @return количество товаров в корзине
+     * @return общее количество товаров в корзине
      */
     private int getProductCount() {
-        int count = 0;
-        for (Product product : products) {
-            if (product != null) {
-                count++;
-            }
-        }
-        return count;
+        return products.size();
     }
 
     /**
@@ -128,7 +138,7 @@ public class ProductBasket {
     public boolean contains(@NotNull String title) {
         for (Product product : products) {
             if (product != null) {
-                if (product.getTitle().equals(title)) {
+                if (Objects.equals(product.getTitle(), title)) {
                     return true;
                 }
             }

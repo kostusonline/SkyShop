@@ -1,6 +1,6 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "ООП. Полиморфизм. Интерфейсы"
+// Домашнее задание по теме "Java Collections Framework: Map"
 
 package org.skypro.skyshop.tools;
 
@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Инструменты для работы с массивами.
@@ -32,22 +33,52 @@ public final class ArrayTools {
         for (int i = 0; i < array.length; i++) {
             if (free && array[i] == null) {
                 return i;
-            }
-            else if (!free && array[i] != null) {
+            } else if (!free && array[i] != null) {
                 return i;
             }
         }
         return NOT_FOUND;
     }
 
+    /**
+     * Возвращает строку, состоящую из элементов массива, разделенных запятой.
+     *
+     * @param list список элементов массива
+     * @param <T>  тип элементов массива
+     * @return строка, состоящая из элементов массива, разделенных запятой
+     */
+    @SuppressWarnings("unused")
     public static <T> @NotNull String toString(List<T> list) {
         if (list == null) {
             return "";
         }
+
         String[] semiResults = new String[list.size()];
         for (int i = 0; i < semiResults.length; i++) {
             semiResults[i] = list.get(i).toString();
         }
         return String.join(", ", semiResults);
+    }
+
+    /**
+     * Возвращает строку, состоящую из ключей-и-значений элементов Map, разделенных запятой.
+     *
+     * @param map Map
+     * @param <K> ключ
+     * @param <V> значение
+     * @return строка, состоящая из элементов Map, разделенных запятой
+     */
+    public static <K, V> @NotNull String toString(Map<K, V> map) {
+        if (map == null) {
+            return "";
+        }
+
+        var sb = new StringBuilder();
+        for(var mapEntry : map.entrySet()) {
+            sb.append(mapEntry.getKey()).append(": ").append(mapEntry.getValue())
+                    .append('\n');
+
+        }
+        return sb.toString();
     }
 }

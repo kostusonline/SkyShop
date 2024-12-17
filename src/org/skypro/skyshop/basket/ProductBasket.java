@@ -1,45 +1,38 @@
 // SkyPro
 // Терских Константин, kostus.online.1974@yandex.ru, 2024
-// Домашнее задание по теме "Java Collections Framework: List"
+// Домашнее задание по теме "Java Collections Framework: Map"
 
 package org.skypro.skyshop.basket;
 
 import org.jetbrains.annotations.NotNull;
 import org.skypro.skyshop.product.Product;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Корзина товаров.
  *
  * @author Константин Терских, kostus.online.1974@yandex.ru, 2024
- * @version 1.1
+ * @version 1.2
  */
 public class ProductBasket {
-    /**
-     * Реализация хранилища товаров.
-     */
-    private final List<Product> products;
+    private final Map<String, List<Product>> basket;
 
     /**
      * Конструктор.
      */
     public ProductBasket() {
-        products = new LinkedList<>();
+        basket = new HashMap<>();
         clear();
-        // LinkedList выбран потому, что сейчас не нужна функциональность
-        // массива в части доступа по индексу. Больше нужна функциональность
-        // по произвольному добавлению и удалению элементов.
+        // Сейчас не нужна упорядоченность товаров в корзине - важны
+        // только базовые операции. Поэтому достаточно HashMap.
     }
 
     /**
      * Очистка корзины.
      */
     public void clear() {
-        products.clear();
+        basket.clear();
     }
 
     /**
@@ -48,6 +41,19 @@ public class ProductBasket {
      * @param product добавляемый товар
      */
     public void add(@NotNull Product product) {
+        // готовим ссылку на ассоциированный список продуктов
+        List<Product> products;
+
+        // если в корзине нет такого товара, то создаем список
+        if (!basket.containsKey(product.getTitle())) {
+            products = new LinkedList<>();
+            basket.put(product.getTitle(), products);
+        } else {
+            // иначе получаем ссылку на список
+            products = basket.get(product.getTitle());
+        }
+
+        // добавляем товар в список
         products.add(product);
     }
 
@@ -59,16 +65,13 @@ public class ProductBasket {
     @NotNull
     public List<Product> remove(@NotNull String title) {
         List<Product> removed = new LinkedList<>();
-
-        Iterator<Product> iterator = products.iterator();
-        while (iterator.hasNext()) {
-            var element = iterator.next();
-            if (element.getTitle().equals(title)) {
-                iterator.remove();
-                removed.add(element);
-            }
+        if (basket.isEmpty()) {
+            return removed;
         }
 
+        if (basket.containsKey(title)) {
+            removed = basket.remove(title);
+        }
         return removed;
     }
 
@@ -78,9 +81,15 @@ public class ProductBasket {
      * @return общая стоимость корзины
      */
     public int getTotalPrice() {
+        //List<Product> products = basket.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        if (basket.isEmpty()) {
+            return 0;
+        }
+
         int sum = 0;
-        for (Product product : products) {
-            if (product != null) {
+        for (String title : basket.keySet()) {
+            List<Product> products = basket.get(title);
+            for (Product product : products) {
                 sum += product.getPrice();
             }
         }
@@ -93,9 +102,14 @@ public class ProductBasket {
      * @return количество специальных товаров в корзине
      */
     public int getSpecialProductCount() {
+        if (basket.isEmpty()) {
+            return 0;
+        }
+
         int count = 0;
-        for (Product product : products) {
-            if (product != null) {
+        for (String title : basket.keySet()) {
+            List<Product> products = basket.get(title);
+            for (Product product : products) {
                 if (product.isSpecial()) {
                     count++;
                 }
@@ -109,21 +123,32 @@ public class ProductBasket {
      *
      * @return общее количество товаров в корзине
      */
+    @SuppressWarnings("unused")
     private int getProductCount() {
-        return products.size();
+        if (basket.isEmpty()) {
+            return 0;
+        }
+
+        int count = 0;
+        for (String title : basket.keySet()) {
+            List<Product> products = basket.get(title);
+            count += products.size();
+        }
+        return count;
     }
 
     /**
      * Печать корзины.
      */
     public void print() {
-        if (getProductCount() <= 0) {
+        if (basket.isEmpty()) {
             System.out.println("в корзине пусто");
             return;
         }
 
-        for (Product product : products) {
-            if (product != null) {
+        for (String title : basket.keySet()) {
+            List<Product> products = basket.get(title);
+            for (Product product : products) {
                 System.out.println(product);
             }
         }
@@ -136,13 +161,6 @@ public class ProductBasket {
      * @return true если товар есть в корзине
      */
     public boolean contains(@NotNull String title) {
-        for (Product product : products) {
-            if (product != null) {
-                if (Objects.equals(product.getTitle(), title)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return basket.containsKey(title);
     }
 }
